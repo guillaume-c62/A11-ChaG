@@ -97,22 +97,19 @@ class Manager{
      */
     public function create(Vehicle $vehicle){
         // [[[[[[ à compléter ]]]]]]
-        $sql = $this->db->prepare("SELECT * FROM vehicles WHERE model =:param1 AND builder =:param2");
-        $sql->bindValue(':param1', $vehicle->getModel(), PDO::PARAM_STR);
-        $sql->bindValue(':param2', $vehicle->getBuilder(), PDO::PARAM_STR);
-        $sql->execute();
-        $count = $sql->rowCount();
-        if($count == 0){
-            $sql = $this->db->prepare("INSERT INTO $vehicle (model, builder, fuel, color, kilometer, immatriculation, technical_control) VALUES (:param1, :param2, :param3, :param4, :param5, :param6, :param7)");
+        $vehicle = new vehicle();
+            $sql = $this->db->prepare("INSERT INTO $vehicle (model, builder, fuel, color, kilometer, immatriculation, technical_control)
+             VALUES (:param1, :param2, :param3, :param4, :param5,:param6, :param7)");
             $sql->bindValue(':param1', $vehicle->getModel(), PDO::PARAM_STR); 
             $sql->bindValue(':param2', $vehicle->getBuilder(), PDO::PARAM_STR);
             $sql->bindValue(':param3', $vehicle->getFuel(), PDO::PARAM_STR);
             $sql->bindValue(':param4', $vehicle->getColor(),PDO::PARAM_STR);
             $sql->bindValue(':param5', $vehicle->getkilometer(), PDO::PARAM_INT);
-            $sql->bindValue(':param4', $vehicle->getImmatriculation(),PDO::PARAM_INT);
-            $sql->bindValue(':param5', $vehicle->getTechnical_control(), PDO::PARAM_STR);
+            $sql->bindValue(':param6', $vehicle->getImmatriculation(),PDO::PARAM_INT);
+            $sql->bindValue(':param7', $vehicle->getTechnical_control(), PDO::PARAM_STR);
             $sql->execute();
-        }
+        return $vehicle;
+        
     }
     
     /**
@@ -121,15 +118,13 @@ class Manager{
      * @return Vehicle retourne un objet véhicule
      */
     public function selectFirst(string $vehicle){
-        $sql = $this->_db->prepare("SELECT * FROM vehicles WHERE model =:param1 ");
+        $sql = $this->db->prepare("SELECT * FROM vehicles WHERE model =:param1 ");
         $sql->bindValue(':param1', $vehicle,PDO::PARAM_STR);
         $sql->execute();
         $fetch = $sql->fetch(PDO::FETCH_ASSOC);
         $vehicle = new Vehicle();      
         $vehicle->hydrate($fetch);
         return $vehicle;
-    
-
         // [[[[[[ à compléter ]]]]]]
 
     }
@@ -152,6 +147,7 @@ class Manager{
         $sql->bindValue(':param5', $vehicle->getkilometer(), PDO::PARAM_INT);
         $sql->bindValue(':param6', $vehicle->getImmatriculation(),PDO::PARAM_INT);
         $sql->bindValue(':param7', $vehicle->getTechnical_control(), PDO::PARAM_STR);
+        $sql->bindValue(':param8', $vehicle->getId(), PDO::PARAM_STR);
         $sql->execute();
     }
 
@@ -172,19 +168,22 @@ class Manager{
      * @return array retourne une liste contenant des objets véhicules
      */
     public function listOfVehiclesByBuilder(string $builder = 'Renault'){
+        $sql = $this->db->prepare("SELECT model , builder , fuel , color, kilometer, immatriculation, technical_control
+        FROM vehicles
+        WHERE model ORDER BY model ASC");
+   
+        $sql -> execute();
+        $fetch = $sql->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach($fetch as $value){
+            echo '<div>';
+            echo '<br>'.$value['model'].'&nbsp;'.$value['builder'].'&nbsp;'.$value['fuel'].'&nbsp;'.$value['color'].
+            '&nbsp;'.$value['kilometer'].'&nbsp;'.$value['immatriculation'].'&nbsp;'.$value['technical_control'].'<br><br>' ;
+            echo '</div>';
+        }
 
         // [[[[[[ à compléter ]]]]]]
-        $sql =$this->db->prepare("SELECT * FROM vehicles ORDER BY builder ASC");
-        $sql->execute();
-        $list = $sql->fetchAll();
-        foreach ($list as $value){
-            echo'<div class"text-center">';
-        echo '<p>'.$value['builder'].'</p>';
-        // echo '<p>'.$value['firstname'].'</p>';
-        // echo '<p>'.$value['age'].'</p>';}
-        }
-        echo'</div>';
-
+        
     }
 
     /**

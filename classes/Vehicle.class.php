@@ -68,10 +68,10 @@ class Vehicle{
 
     // Setters
         // [[[[[[ à compléter ]]]]]]
-     public function setId(int $id){
+        public function setId(int $id){
         $this->id = $id;
     }
-    public function setModel(string $Model){
+         public function setModel(string $Model){
         $this->model = $Model; 
     }
     public function setBuilder(string $Builder){
