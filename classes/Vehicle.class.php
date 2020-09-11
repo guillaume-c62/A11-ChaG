@@ -39,39 +39,39 @@ class Vehicle{
 
     // Getters
         // [[[[[[ à compléter ]]]]]]
-        public function getId(){
-            return $this->id;
+    public function getId(){
+        return $this->id;
         }
-        public function getModel(){
-            return $this->model;
+    public function getModel(){
+        return $this->model;
         }
-        public function getBuilder(){
-            return $this->builder;
+    public function getBuilder(){
+        return $this->builder;
         }
-        public function getFuel(){
-            return $this->fuel;
+    public function getFuel(){
+        return $this->fuel;
         }
-        public function getColor(){
-            return $this->color;
+    public function getColor(){
+        return $this->color;
         }
-        public function getkilometer(){
-            return $this->kilometer;
+    public function getkilometer(){
+        return $this->kilometer;
         }
-        public function getImmatriculation(){
-            return $this->immatriculation;
+    public function getImmatriculation(){
+        return $this->immatriculation;
         }
-        public function getTechnical_control(){
-            return $this->technical_control;
+    public function getTechnical_control(){
+        return $this->technical_control;
         }
         
 
 
     // Setters
         // [[[[[[ à compléter ]]]]]]
-        public function setId(int $id){
+    public function setId(int $id){
         $this->id = $id;
     }
-         public function setModel(string $Model){
+    public function setModel(string $Model){
         $this->model = $Model; 
     }
     public function setBuilder(string $Builder){
